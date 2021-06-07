@@ -3,6 +3,9 @@
  *  Copyright 2021 Soroush Alinaghian
  */
 package base;
+
+import java.util.Scanner;
+
 /*
 Create a program to calculate the body mass index (BMI) for a person using the person’s height in inches and weight in pounds.
 The program should prompt the user for weight and height.
@@ -35,7 +38,49 @@ For Imperial measurements, prompt for feet and inches and convert feet to inches
 Use a GUI interface with sliders for height and weight. Update the user interface on the fly. Use colors as well as text to indicate health.
  */
 public class App {
+    static Scanner in = new Scanner(System.in);
+
     public static void main(String[] args) {
-        
+        int weight = readWeight();
+        int height = readHeight();
+        float bmi = calculateBMI(weight, height);
+        generateOutput(bmi);
+    }
+
+    private static void generateOutput(float bmi) {
+        if(bmi >= 18.5 && bmi <= 25)
+            System.out.println("You are within the ideal weight range.");
+        else if(bmi > 25)
+            System.out.println("You are overweight. You should see your doctor.");
+        else
+            System.out.println("You are underweight. You should see your doctor.");
+
+    }
+
+    private static float calculateBMI(int weight, int height) {
+        float bmi = (float) (weight/Math.pow(height, 2)) * 703;
+        System.out.println(String.format("Your BMI is %.2f.", bmi));
+        return bmi;
+    }
+
+    private static void checkParameters() {
+        if(in.hasNextInt())
+            System.out.print("");
+        else{
+            System.out.println("Invalid input... Enter valid data");
+            System.exit(0);
+        }
+    }
+
+    private static int readHeight() {
+        System.out.print("Enter input for Height: ");
+        checkParameters();
+        return in.nextInt();
+    }
+
+    private static int readWeight() {
+        System.out.print("Enter input for Weight: ");
+        checkParameters();
+        return in.nextInt();
     }
 }
